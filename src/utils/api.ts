@@ -1,6 +1,6 @@
 export const submitDataToGoogleSheets = async (data: SubmitDataParams): Promise<boolean> => {
   try {
-    const formUrl = "https://docs.google.com/forms/d/e/1VUQLTqRBR5zahCKoyOP0NiqJlfz61_yLASKFaUrbBJg/formResponse";
+    const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSddDf_TNzgnvgyDBG1p-DXA6ifWIcjnsgtUwYN5dSsL0XYkXQ/formResponse";
 
     const formData = new FormData();
     formData.append("entry.1655691814", data.fullName);         // Họ tên
