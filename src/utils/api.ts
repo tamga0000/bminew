@@ -12,6 +12,7 @@ export const submitDataToGoogleSheets = async (data: SubmitDataParams): Promise<
     formData.append("entry.1979757439", data.bmi.toString());   // BMI
     formData.append("entry.1844499791", data.category);         // Phân loại
     formData.append("entry.167719965", data.unit);               // Đơn vị
+    formData.append("entry.1373571352", data.category);               // giới tính
     // Kiểm tra dữ liệu trước khi gửi
     console.log("🧾 Form data gửi:", Object.fromEntries(formData.entries()));
 
