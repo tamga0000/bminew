@@ -1,36 +1,30 @@
-interface SubmitDataParams {
-  fullName: string;
-  phoneNumber: string;
-  weight: number;
-  height: number;
-  bmi: number;
-  category: string;
-  unit: string;
-}
-
 export const submitDataToGoogleSheets = async (data: SubmitDataParams): Promise<boolean> => {
   try {
-    console.log('Đang gửi dữ liệu đến Google Sheets...', data);
-    
-    const apiUrl = "https://script.google.com/macros/s/AKfycbxOoOsXckR0ph_VtitYs0vj7Hwt0C_Ai4VmZkmB0VYNAC2MrAupedRvdJ8-VBMdUQmzQQ/exec";
-    
+    const formUrl = "https://docs.google.com/forms/d/e/1VUQLTqRBR5zahCKoyOP0NiqJlfz61_yLASKFaUrbBJg/formResponse";
+
     const formData = new FormData();
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value.toString());
+    formData.append("entry.1655691814", data.fullName);         // Họ tên
+    formData.append("entry.943451764", data.age.toString());   // Độ tuổi
+    formData.append("entry.1898986021", data.phoneNumber);      // Số điện thoại
+    formData.append("entry.946703297", data.weight.toString()); // Cân nặng
+    formData.append("entry.1856923099", data.height.toString()); // Chiều cao
+    formData.append("entry.952692534", data.activityLevel);     // Mức độ vận động
+    formData.append("entry.1979757439", data.bmi.toString());   // BMI
+    formData.append("entry.1844499791", data.category);         // Phân loại
+    formData.append("entry.167719965", data.unit);               // Đơn vị
+    // Kiểm tra dữ liệu trước khi gửi
+    console.log("🧾 Form data gửi:", Object.fromEntries(formData.entries()));
+
+    await fetch(formUrl, {
+      method: "POST",
+      mode: "no-cors",
+      body: formData
     });
-    
-    console.log('FormData được tạo:', Object.fromEntries(formData.entries()));
-    
-    const response = await fetch(apiUrl, {
-      method: 'POST',
-      body: formData,
-      mode: 'no-cors' // Google Apps Script requires no-cors mode
-    });
-    
-    console.log('Đã gửi dữ liệu thành công!');
+
+    console.log("✅ Gửi Google Form thành công!");
     return true;
   } catch (error) {
-    console.error("Lỗi khi gửi dữ liệu:", error);
+    console.error("❌ Gửi Google Form lỗi:", error);
     return false;
   }
 };
